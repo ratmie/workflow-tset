@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: test
         id: test
-        run: echo "::set-output name=foo=bar"
+        run: echo "::set-output name=foo::bar"
   job2:
     runs-on: ubuntu-latest
     needs: [job1]
@@ -18,4 +18,4 @@ jobs:
       - name: test
         env:
           FOO: ${{ needs.job1.outputs.output1 }}
-        run: echo "$FOO"
+        run: echo "$FOO" && echo "finish"
