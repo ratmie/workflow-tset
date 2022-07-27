@@ -4,6 +4,7 @@ on:
 
 jobs:
   job1:
+    runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.test.outputs.foo }}
     steps:
@@ -11,7 +12,8 @@ jobs:
         id: test
         run: echo "::set-output name=foo=bar"
   job2:
-    need: [job1]
+    runs-on: ubuntu-latest
+    needs: [job1]
     steps:
       - name: test
         env:
