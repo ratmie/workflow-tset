@@ -1,0 +1,19 @@
+name: outputs over jobs
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    outputs:
+      output1: ${{ steps.test.outputs.foo }}
+    steps:
+      - name: test
+        id: test
+        run: echo "::set-output name=foo=bar"
+  job2:
+    need: [job1]
+    steps:
+      - name: test
+        env:
+          FOO: ${{ needs.job1.outputs.output1 }}
+        run: echo "$FOO"
